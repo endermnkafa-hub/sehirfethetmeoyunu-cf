@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <title>Şehir & Toprak Fethi — Güncelleniyor</title>
+    <style>
+      @keyframes sf-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      body {
+        margin: 0;
+        padding: 24px;
+        min-height: 100vh;
+        background: radial-gradient(circle at center, #111827 0%, #090d16 100%);
+        color: #f8fafc;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .card {
+        max-width: 380px;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(245, 158, 11, 0.35);
+        border-radius: 24px;
+        padding: 28px 24px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+      }
+      .spinner {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        border: 3px solid rgba(245, 158, 11, 0.2);
+        border-top-color: #f59e0b;
+        animation: sf-spin 1s linear infinite;
+      }
+      .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(245, 158, 11, 0.14);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        color: #fcd34d;
+        font-size: 11px;
+        font-weight: 800;
+        margin-bottom: 14px;
+      }
+      h1 {
+        font-size: 18px;
+        font-weight: 900;
+        margin: 0 0 8px;
+      }
+      p {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #94a3b8;
+        margin: 0 0 18px;
+      }
+      button {
+        width: 100%;
+        padding: 11px 16px;
+        border-radius: 14px;
+        background: #f59e0b;
+        color: #090d16;
+        font-weight: 900;
+        font-size: 12px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      setTimeout(function () {
+        window.location.replace('/sehirfethetmeoyunu/?v=' + Date.now());
+      }, 3500);
+    </script>
+  </head>
+  <body>
+    <div class="card">
+      <div class="spinner"></div>
+      <div class="badge">BAKIM & GÜNCELLEME</div>
+      <h1>Şu Anda Güncelleniyor / Bakım Yapılıyor</h1>
+      <p>
+        Sunucuya yeni güncelleme yükleniyor. Birkaç saniye içinde otomatik olarak ana ekrana yönlendirileceksiniz...
+      </p>
+      <button onclick="window.location.replace('/sehirfethetmeoyunu/?v=' + Date.now())">
+        Şimdi Yeniden Dene
+      </button>
+    </div>
+  </body>
+</html>
