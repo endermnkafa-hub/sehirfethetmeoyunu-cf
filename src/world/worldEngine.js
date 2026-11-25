@@ -2114,6 +2114,57 @@ export class WorldSimulationEngine {
     // it's forming a 2x2 corner or solid block, which is allowed!
     if (diagonalOwned >= 1) return false;
 
+    // Zorunlu koridor / kıstak / sağı-solu deniz veya kendi toprağımız kontrolü:
+    // Eğer bir hatta ilerlemek zorundaysa (yan taraflar deniz ya da zaten kendi toprağıysa), çizgi engeli ASLA kilit oluşturmamalıdır!
+    const isWaterOrMine = (px, py) => {
+      if (px < 0 || px >= MAP_W || py < 0 || py >= MAP_H) return true;
+      const idx = py * MAP_W + px;
+      if (!this.worldData.isLand[idx]) return true; // Deniz/su
+      if (this.owners[idx] === countryId) return true; // Zaten kendi toprağımız
+      return false;
+    };
+
+    const stepX = x - singleNeighbor.x;
+    const stepY = y - singleNeighbor.y;
+    const side1X = -stepY;
+    const side1Y = stepX;
+    const side2X = stepY;
+    const side2Y = -stepX;
+
+    // 1. Hedef pikselin sağı ve solu deniz veya kendi toprağımızsa -> zorunlu dar geçit, engelleme!
+    if (
+      isWaterOrMine(x + side1X, y + side1Y) &&
+      isWaterOrMine(x + side2X, y + side2Y)
+    ) {
+      return false;
+    }
+
+    // 2. Komşunun sağı ve solu deniz veya kendi toprağımızsa -> koridordan çıkış / ilerleme, engelleme!
+    if (
+      isWaterOrMine(singleNeighbor.x + side1X, singleNeighbor.y + side1Y) &&
+      isWaterOrMine(singleNeighbor.x + side2X, singleNeighbor.y + side2Y)
+    ) {
+      return false;
+    }
+
+    // 3. Bölgesel coğrafi darlık kontrolü: singleNeighbor çevresinde 3x3 alanda toplam kaç kara hücresi var?
+    let totalLandIn3x3 = 0;
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        const px = singleNeighbor.x + dx;
+        const py = singleNeighbor.y + dy;
+        if (px >= 0 && px < MAP_W && py >= 0 && py < MAP_H) {
+          if (this.worldData.isLand[py * MAP_W + px]) {
+            totalLandIn3x3++;
+          }
+        }
+      }
+    }
+    // Eğer etrafta zaten toplam 4 veya daha az kara varsa (ince burun, yarımada veya kıstak), çizgi engeli uygulanamaz!
+    if (totalLandIn3x3 <= 4) {
+      return false;
+    }
+
     // (x, y) touches ONLY 1 single neighbor in its entire 3x3 neighborhood!
     // Check if that single neighbor itself is an isolated beachhead (< 6 connected pixels)
     const startIdx = singleNeighbor.y * MAP_W + singleNeighbor.x;

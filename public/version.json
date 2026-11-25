@@ -1,8 +1,8 @@
 {
-  "versionCode": 21,
-  "versionName": "2.10",
-  "minVersionCode": 21,
-  "apkUrl": "https://github.com/endermnkafa-hub/sehirfethetmeoyunu/releases/download/v1.0-latest/sehir-fethetme-oyunu.apk",
-  "releaseNotes": "Bazı ülkelerin haritada görünmemesi ve senkronizasyon veri kaybı hataları (zaman damgalı snapshot birleştirme, anında kayıt, tekrar eden olay koruması) tamamen düzeltildi.",
+  "versionCode": 22,
+  "versionName": "2.11",
+  "minVersionCode": 22,
+  "apkUrl": "https://github.com/endermnkafa-hub/sehirfethetmeoyunu-cf/releases/download/v1.0-latest/sehir-fethetme-oyunu.apk",
+  "releaseNotes": "Kıstak/koridor zorunlu çizgi ilerlemesi izin kuralı eklendi. Haritada ve devletler listesinde asker gizleme güncellendi.",
   "updatedAt": "2026-11-25"
 }

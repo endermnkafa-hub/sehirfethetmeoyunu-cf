@@ -471,3 +471,29 @@ test('CF Worker INIT_STATE and live delta updates preserve countries, conquests,
   assert.equal(engine.owners[20 * 1000 + 23], 20, 'Live CONQUER_PIXEL delta must be applied');
   assert.equal(engine.countryMap.get(20).gold, 999, 'Live SYNC_COUNTRY_STATS delta must be applied');
 });
+
+test('narrow isthmus/corridor bounded by sea or owned territory allows linear expansion', () => {
+  const engine = createMockEngine();
+  const cid = 10;
+  engine.countryMap.set(cid, {
+    id: cid,
+    name: 'IsthmusNation',
+    color: '#3B82F6',
+    landCount: 15,
+  });
+
+  // Setup a 1-pixel wide peninsula/bridge along row y=50 from x=10 to x=15
+  // y=49 and y=51 are sea (water = 0)
+  for (let x = 10; x <= 15; x++) {
+    engine.worldData.isLand[50 * 1000 + x] = 1;
+  }
+  // Country already owns (10,50), (11,50), (12,50)
+  engine.owners[50 * 1000 + 10] = cid;
+  engine.owners[50 * 1000 + 11] = cid;
+  engine.owners[50 * 1000 + 12] = cid;
+
+  // Expanding to (13,50): sağı ve solu su (y=49 ve y=51 deniz)
+  // Bu yüzden zorunlu koridordur ve snaking sayılmamalıdır!
+  const isSnake = engine.isSnakingConquest(cid, 13, 50);
+  assert.equal(isSnake, false, 'Narrow isthmus with sea on flanks must NOT be blocked as snaking');
+});
