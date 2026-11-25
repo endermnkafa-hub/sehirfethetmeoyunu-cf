@@ -846,7 +846,7 @@ export class WorldMapRenderer {
         ctx.save();
         const fontSize = 11;
         ctx.font = "800 11px Inter, system-ui, sans-serif";
-        const label = `${country.name} (${country.landCount} px · ${Math.floor(country.troops)} Asker)`;
+        const label = country.name;
         const flagThumbW = 20;
         const flagThumbH = 13;
         const textW = ctx.measureText(label).width;

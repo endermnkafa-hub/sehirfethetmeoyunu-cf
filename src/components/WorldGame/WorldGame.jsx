@@ -1895,16 +1895,6 @@ export default function WorldGame({ onReturnToModeSelect }) {
                                   SEN
                                 </span>
                               )}
-                              <span
-                                className={`text-[9px] font-black px-1.5 py-0.5 rounded-full flex items-center gap-1 shrink-0 ${statusColor}`}
-                              >
-                                <span className={`w-1.5 h-1.5 rounded-full ${dotColor}`} />
-                                {statusLabel}
-                              </span>
-                            </div>
-                            <div className="text-[11px] text-slate-400 font-bold">
-                              {c.landCount} Piksel • {Math.floor(c.troops)}/
-                              {c.capacity} Asker
                             </div>
                           </div>
                         </div>
@@ -4068,7 +4058,7 @@ export default function WorldGame({ onReturnToModeSelect }) {
                         <option value="">-- Devlet Seçin --</option>
                         {countries.map((c) => (
                           <option key={c.id} value={c.id}>
-                            {c.name} ({c.landCount} px)
+                            {c.name}
                           </option>
                         ))}
                       </select>
